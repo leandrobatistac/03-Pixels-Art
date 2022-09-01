@@ -1,9 +1,25 @@
 // ===================================================================================
 // Variáveis globais
 
-const paleta = document.querySelectorAll('.color');
+const paleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
 const botao = document.getElementById('button-random-color');
 const elementosPaleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
+const pixelBoard = document.querySelector('#pixel-board');
+const numLinhas = 5;
+const numColunas = 5;
+
+// ===================================================================================
+// Paleta de Cores Padrão
+
+const cor1 = document.querySelector('#cor1');
+const cor2 = document.querySelector('#cor2');
+const cor3 = document.querySelector('#cor3');
+const cor4 = document.querySelector('#cor4');
+
+cor1.style.backgroundColor = 'black';
+cor2.style.backgroundColor = '#3B60E4';
+cor3.style.backgroundColor = '#7765E3';
+cor4.style.backgroundColor = '#C8ADC0';
 
 // ===================================================================================
 // Função para gerar cores aleatórias
@@ -47,3 +63,24 @@ function selecionarCor(clicado){
     }
 
 // ===================================================================================
+// Função para criar o Board de Pixels
+function criarBoard(){
+    for(let index2=0; index2<numLinhas; index2+=1){
+        const linhas = document.createElement('div');
+        pixelBoard.appendChild(linhas);
+
+        for(let index3=0; index3<numColunas; index3+=1){
+            const pixel = document.createElement('div');
+            pixel.className = 'pixel';
+            linhas.appendChild(pixel);
+            pixel.addEventListener('click', function(){
+                const corAtual = document.querySelector('.selected').style.backgroundColor;
+                this.style.backgroundColor = corAtual;
+                console.log(corAtual);
+            });
+        }
+    }
+}
+
+criarBoard();
+
