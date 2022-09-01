@@ -3,6 +3,7 @@
 
 const paleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
 const botao = document.getElementById('button-random-color');
+const botao2 = document.getElementById('clear-board');
 const elementosPaleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
 const pixelBoard = document.querySelector('#pixel-board');
 const numLinhas = 5;
@@ -84,3 +85,17 @@ function criarBoard(){
 
 criarBoard();
 
+// ===================================================================================
+// Função para limpar o Board
+function limparBoard (){
+    botao2.addEventListener('click', function(){
+
+        const divPixel = document.querySelectorAll('.pixel');
+
+        for(let key of divPixel){
+            key.style.backgroundColor = 'white';
+        }
+    });
+}
+
+limparBoard();
