@@ -10,7 +10,6 @@ let numLinhas = 5;
 let numColunas = 5;
 const arrayCores = ['black', '#3B60E4', '#7765E3', '#C8ADC0'];
 let codigoHex = '';
-const arrayBackground = [];
 
 // ===================================================================================
 // Manter o tamanho utilizado por ultimo
@@ -91,6 +90,7 @@ function criarBoard(){
             pixel.addEventListener('click', function(){
                 const corAtual = document.querySelector('.selected').style.backgroundColor;
                 this.style.backgroundColor = corAtual;
+                atualizarCor()
             });
         }
     }
@@ -107,6 +107,7 @@ function limparBoard (){
 
         for(let key of divPixel){
             key.style.backgroundColor = 'white';
+            atualizarCor()
         }
     });
 }
@@ -172,3 +173,24 @@ btn.addEventListener('click', function(e){
      localStorage.setItem('boardSize', JSON.stringify(tamanho));
 })
 
+// ===================================================================================
+// Salvar desenho anterior
+
+const todosPixels = document.querySelectorAll('.pixel');
+const backgroundAtualizado = [];
+
+function atualizarCor(){
+for(k=0; k<todosPixels.length; k+=1){
+    backgroundAtualizado[k] = todosPixels[k].style.backgroundColor;
+    localStorage.setItem('pixelBoard', JSON.stringify(backgroundAtualizado));
+}
+}
+
+let salvo3 = localStorage.getItem('pixelBoard');
+
+if(salvo3){
+    salvo3 = JSON.parse(salvo3);
+    for(let i4=0; i4<salvo3.length; i4+=1){
+        todosPixels[i4].style.backgroundColor = salvo3[i4];
+    }
+}
