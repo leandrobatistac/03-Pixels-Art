@@ -10,7 +10,19 @@ let numLinhas = 5;
 let numColunas = 5;
 const arrayCores = ['black', '#3B60E4', '#7765E3', '#C8ADC0'];
 let codigoHex = '';
+const arrayBackground = [];
 
+// ===================================================================================
+// Manter o tamanho utilizado por ultimo
+
+let salvo2 = localStorage.getItem('boardSize');
+if(salvo2){
+    salvo2 = JSON.parse(salvo2);
+    numColunas = salvo2;
+    numLinhas = salvo2;
+} else{
+    localStorage.setItem('boardSize', JSON.stringify(numColunas));
+}
 
 // ===================================================================================
 // Paleta de Cores Padrão
@@ -132,7 +144,6 @@ if(salvo){
 // Botão do VQV e Input
 
 const btn = document.querySelector('#generate-board');
-
 btn.addEventListener('click', function(e){
     let tamanho = document.querySelector('#board-size').value;
     const removerPixels = document.querySelectorAll('.pixel');
@@ -158,4 +169,6 @@ btn.addEventListener('click', function(e){
      numColunas = tamanho;
 
      criarBoard();
+     localStorage.setItem('boardSize', JSON.stringify(tamanho));
 })
+
