@@ -8,6 +8,9 @@ const elementosPaleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
 const pixelBoard = document.querySelector('#pixel-board');
 const numLinhas = 5;
 const numColunas = 5;
+const arrayCores = ['black', '#3B60E4', '#7765E3', '#C8ADC0'];
+let codigoHex = '';
+
 
 // ===================================================================================
 // Paleta de Cores Padrão
@@ -16,11 +19,6 @@ const cor1 = document.querySelector('#cor1');
 const cor2 = document.querySelector('#cor2');
 const cor3 = document.querySelector('#cor3');
 const cor4 = document.querySelector('#cor4');
-
-cor1.style.backgroundColor = 'black';
-cor2.style.backgroundColor = '#3B60E4';
-cor3.style.backgroundColor = '#7765E3';
-cor4.style.backgroundColor = '#C8ADC0';
 
 // ===================================================================================
 // Função para gerar cores aleatórias
@@ -42,8 +40,12 @@ function criarPaleta () {
         for(let index = 0; index<=paleta.length-1; index+=1){
             if(index === 0){
                 paleta[index].style.backgroundColor = 'black';
+                arrayCores[index] = 'black';
             } else {
-                paleta[index].style.backgroundColor = gerarCores();
+                codigoHex = gerarCores();
+                paleta[index].style.backgroundColor = codigoHex;
+                arrayCores[index] = codigoHex;
+                atualizaLocalStorage();
             }
         }
     });
@@ -64,7 +66,7 @@ function selecionarCor(clicado){
     }
 
 // ===================================================================================
-// Função para criar o Board de Pixels
+// Função para criar o Board de Pixels (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/this)
 function criarBoard(){
     for(let index2=0; index2<numLinhas; index2+=1){
         const linhas = document.createElement('div');
@@ -77,7 +79,6 @@ function criarBoard(){
             pixel.addEventListener('click', function(){
                 const corAtual = document.querySelector('.selected').style.backgroundColor;
                 this.style.backgroundColor = corAtual;
-                console.log(corAtual);
             });
         }
     }
@@ -99,3 +100,31 @@ function limparBoard (){
 }
 
 limparBoard();
+
+// ===================================================================================
+// Função para salvar as cores no LocalStorage
+
+function atualizaLocalStorage (){
+    localStorage.setItem('colorPalette', JSON.stringify(arrayCores));
+}
+
+// ===================================================================================
+// Função para buscar as cores no LocalStorage
+
+let salvo = localStorage.getItem('colorPalette');
+
+if(salvo){
+    salvo = JSON.parse(salvo);
+    for(let i=0; i<salvo.length; i+=1){
+        cor1.style.backgroundColor = salvo[0];
+        cor2.style.backgroundColor = salvo[1];
+        cor3.style.backgroundColor = salvo[2];
+        cor4.style.backgroundColor = salvo[3];
+    }
+} else {
+    cor1.style.backgroundColor = 'black';
+    cor2.style.backgroundColor = '#3B60E4';
+    cor3.style.backgroundColor = '#7765E3';
+    cor4.style.backgroundColor = '#C8ADC0';
+}
+
