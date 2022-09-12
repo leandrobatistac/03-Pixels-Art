@@ -6,8 +6,8 @@ const botao = document.getElementById('button-random-color');
 const botao2 = document.getElementById('clear-board');
 const elementosPaleta = document.querySelectorAll('#cor1, #cor2, #cor3, #cor4');
 const pixelBoard = document.querySelector('#pixel-board');
-const numLinhas = 5;
-const numColunas = 5;
+let numLinhas = 5;
+let numColunas = 5;
 const arrayCores = ['black', '#3B60E4', '#7765E3', '#C8ADC0'];
 let codigoHex = '';
 
@@ -102,14 +102,14 @@ function limparBoard (){
 limparBoard();
 
 // ===================================================================================
-// Função para salvar as cores no LocalStorage
+// Função para salvar as cores da Paleta no LocalStorage
 
 function atualizaLocalStorage (){
     localStorage.setItem('colorPalette', JSON.stringify(arrayCores));
 }
 
 // ===================================================================================
-// Função para buscar as cores no LocalStorage
+// Função para buscar as cores da Paleta no LocalStorage
 
 let salvo = localStorage.getItem('colorPalette');
 
@@ -128,3 +128,34 @@ if(salvo){
     cor4.style.backgroundColor = '#C8ADC0';
 }
 
+// ===================================================================================
+// Botão do VQV e Input
+
+const btn = document.querySelector('#generate-board');
+
+btn.addEventListener('click', function(e){
+    let tamanho = document.querySelector('#board-size').value;
+    const removerPixels = document.querySelectorAll('.pixel');
+
+    if(tamanho.length === 0){
+        alert('Board inválido!')
+        return
+    }
+
+    if(tamanho > 50){
+        tamanho = 50;
+    }
+
+    if(tamanho < 5){
+        tamanho = 5;
+    }
+
+    for(let i2=0; i2<removerPixels.length; i2+=1){
+        removerPixels[i2].remove();
+    }
+    e.preventDefault();
+     numLinhas = tamanho;
+     numColunas = tamanho;
+
+     criarBoard();
+})

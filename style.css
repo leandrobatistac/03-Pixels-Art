@@ -59,3 +59,11 @@ main {
     color: wheat;
     width: 100%;
 }
+
+#board-size {
+    width: 30px;
+}
+
+#formulario, #clear-bord {
+    display: inline;
+}
